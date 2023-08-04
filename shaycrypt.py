@@ -98,7 +98,6 @@ def create_pstkey(prkey, name, mck):
         if mnum > len([x[0] for x in list(bdct.items()) if x[1] != 0]):
             mnum = 1
 
-    #print(bbk)
     curop = True
     lwhgh = True
     bk = ""
@@ -163,8 +162,6 @@ def shay_encrypt(n, c, dt):
     pk = create_prekey(tn)
     actkey = create_pstkey(pk, tn, ':'.join(
         ['{:02x}'.format((getnode() >> elements) & 0xff) for elements in range(0, 8 * 6, 8)][::-1]))
-    print(':'.join(
-        ['{:02x}'.format((getnode() >> elements) & 0xff) for elements in range(0, 8 * 6, 8)][::-1]))
     dk = create_dkey(tn)
     cipher = Cipher(algorithms.AES(dk),
                     modes.CBC((':'.join(['{:02x}'.format((getnode() >> elements) & 0xff) for elements in
@@ -174,7 +171,6 @@ def shay_encrypt(n, c, dt):
     pddt = pdd.update(dt.encode()) + pdd.finalize()
     crypt = cipher.encryptor()
     eodata = crypt.update(pddt) + crypt.finalize()
-    print(eodata)
     cipher = Cipher(algorithms.AES(actkey),
                     modes.CBC((':'.join(['{:02x}'.format((getnode() >> elements) & 0xff) for elements in
                                          range(0, 8 * 6, 8)][::-1])).replace(":", "", 1).encode()),
